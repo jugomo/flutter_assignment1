@@ -13,14 +13,9 @@ void main() {
 class AssignmentApp extends StatelessWidget {
   const AssignmentApp({Key? key}) : super(key: key);
 
-  void _pressed() {
-    
-  }
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "Flutter Assignment",
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -28,20 +23,7 @@ class AssignmentApp extends StatelessWidget {
         appBar: AppBar(
           title: const Text("My changing text app"),
         ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text(
-                "contenido",
-              ),
-              TextButton(
-                onPressed: _pressed,
-                child: const Text("press me"),
-              ),
-            ],
-          ),
-        ),
+        body: const TextControlWidget(),
       ),
     );
   }
@@ -55,8 +37,41 @@ class TextControlWidget extends StatefulWidget {
 }
 
 class _TextWidget extends State<TextControlWidget> {
+  bool pressed = false;
+
+  void _pressed() {
+    setState(() {
+      pressed = !pressed;
+    });
+  }
+
+  String getPressed() {
+    return pressed ? "pressed" : "unpressed";
+  }
+
+  MaterialColor getColor() {
+    return pressed ? Colors.green : Colors.red;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return const Text("");
+    return Center(
+      child: Container(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(getPressed()),
+            TextButton(
+              style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.black)),
+              onPressed: _pressed,
+              child: const Text("press me..."),
+            ),
+          ],
+        ),
+        color: getColor(),
+        width: MediaQuery.of(context).size.width,
+      ),
+    );
   }
 }
